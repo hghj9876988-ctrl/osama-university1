@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#102b50">
+  <title>برنامج أسامة الحداد</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">🎓</div>
+      <div><strong>برنامج أسامة الحداد</strong><small>منصة طلاب جامعة إب</small></div>
+    </div>
+    <button class="icon-btn" id="notifyBtn" aria-label="الإشعارات">🔔</button>
+  </header>
+
+  <main>
+    <section class="welcome card">
+      <div>
+        <span class="eyebrow">أهلاً بك في منصتك الجامعية</span>
+        <h1 id="welcomeTitle">نظّم دراستك بذكاء</h1>
+        <p>محاضراتك وملفاتك واختباراتك في مكان واحد.</p>
+      </div>
+      <div class="welcome-cap">📚</div>
+    </section>
+
+    <section class="stats">
+      <div class="stat card"><span>محاضرات اليوم</span><b id="todayCount">0</b></div>
+      <div class="stat card"><span>محاضرات الغد</span><b id="tomorrowCount">0</b></div>
+      <div class="stat card"><span>ملفات PDF</span><b id="pdfCount">0</b></div>
+    </section>
+
+    <nav class="tabs" aria-label="الأقسام">
+      <button class="tab active" data-page="home">الرئيسية</button>
+      <button class="tab" data-page="schedule">الجدول</button>
+      <button class="tab" data-page="library">ملفات PDF</button>
+      <button class="tab" data-page="quizzes">الاختبارات</button>
+      <button class="tab" data-page="account">حسابي</button>
+    </nav>
+
+    <section id="page-home" class="page active">
+      <div class="section-head"><h2>محاضرات اليوم</h2><button class="text-btn" data-go="schedule">عرض الجدول</button></div>
+      <div id="todayList" class="stack"></div>
+      <div class="section-head"><h2>محاضرات الغد</h2></div>
+      <div id="tomorrowList" class="stack"></div>
+      <div class="tip card"><span>💡</span><div><b>تذكير دراسي</b><p>أضف جدولك لتظهر لك محاضرات اليوم والغد هنا.</p></div></div>
+    </section>
+
+    <section id="page-schedule" class="page">
+      <div class="section-head"><h2>جدول المحاضرات</h2><button class="primary small" id="addLectureBtn">＋ إضافة</button></div>
+      <div class="filter-row">
+        <select id="dayFilter" aria-label="تصفية حسب اليوم">
+          <option value="all">كل الأيام</option>
+          <option value="0">الأحد</option><option value="1">الإثنين</option>
+          <option value="2">الثلاثاء</option><option value="3">الأربعاء</option>
+          <option value="4">الخميس</option><option value="5">الجمعة</option><option value="6">السبت</option>
+        </select>
+      </div>
+      <div id="scheduleList" class="stack"></div>
+    </section>
+
+    <section id="page-library" class="page">
+      <div class="section-head"><h2>مكتبة المحاضرات</h2><label class="primary small upload-label">＋ إضافة PDF<input id="pdfInput" type="file" accept="application/pdf"></label></div>
+      <p class="muted">أضف ملفات المحاضرات للرجوع إليها من هذا الجهاز.</p>
+      <div id="pdfList" class="stack"></div>
+    </section>
+
+    <section id="page-quizzes" class="page">
+      <h2>الاختبارات التجريبية</h2>
+      <p class="muted">اختبر معلوماتك في البرمجة واحصل على نتيجتك فوراً.</p>
+      <div class="quiz-choice">
+        <button class="quiz-card card" data-quiz="cpp"><span> C++ </span><b>اختبار لغة سي بلس بلس</b><small>أسئلة اختيار من متعدد</small></button>
+        <button class="quiz-card card" data-quiz="python"><span>🐍</span><b>اختبار Python</b><small>أسئلة اختيار من متعدد</small></button>
+      </div>
+      <div id="quizArea"></div>
+    </section>
+
+    <section id="page-account" class="page">
+      <h2>حساب الطالب</h2>
+      <div class="card form-card">
+        <label>اسم الطالب<input id="studentName" placeholder="اكتب اسمك"></label>
+        <label>الرقم الجامعي<input id="studentNumber" placeholder="الرقم الجامعي (اختياري)"></label>
+        <button class="primary" id="saveProfile">حفظ البيانات</button>
+        <p class="muted tiny">هذه النسخة تجريبية وتحفظ البيانات على الجهاز الحالي فقط. سنضيف تسجيل الحسابات السحابي في المرحلة التالية.</p>
+      </div>
+      <div class="card admin-note"><b>إدارة المحتوى</b><p>في هذه النسخة يمكنك إضافة المحاضرات والملفات من هذا الجهاز. سنضيف صلاحيات المشرف والطلاب وقاعدة البيانات المشتركة لاحقاً.</p></div>
+    </section>
+  </main>
+
+  <dialog id="lectureDialog">
+    <form method="dialog" id="lectureForm" class="dialog-form">
+      <div class="dialog-head"><h3 id="dialogTitle">إضافة محاضرة</h3><button class="icon-btn" value="cancel" aria-label="إغلاق">✕</button></div>
+      <input type="hidden" id="lectureId">
+      <label>اسم المادة<input id="subject" required placeholder="مثال: برمجة C++"></label>
+      <label>اسم الدكتور<input id="doctor" required placeholder="اسم الدكتور"></label>
+      <div class="two">
+        <label>اليوم<select id="lectureDay"><option value="0">الأحد</option><option value="1">الإثنين</option><option value="2">الثلاثاء</option><option value="3">الأربعاء</option><option value="4">الخميس</option><option value="5">الجمعة</option><option value="6">السبت</option></select></label>
+        <label>الوقت<input id="lectureTime" type="time" required></label>
+      </div>
+      <label>القاعة<input id="room" placeholder="مثال: المعمل 2"></label>
+      <button class="primary" id="saveLecture" value="default">حفظ المحاضرة</button>
+    </form>
+  </dialog>
+
+  <dialog id="pdfDialog">
+    <div class="dialog-form">
+      <div class="dialog-head"><h3>ملف المحاضرة</h3><button class="icon-btn" id="closePdf">✕</button></div>
+      <p id="pdfMessage" class="muted"></p>
+      <a id="pdfOpen" class="primary link-button" target="_blank" rel="noopener">فتح ملف PDF</a>
+    </div>
+  </dialog>
+
+  <footer>© برنامج أسامة الحداد · جامعة إب</footer>
+  <script src="app.js"></script>
+</body>
+</html>

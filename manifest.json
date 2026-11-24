@@ -1,0 +1,11 @@
+{
+  "name": "برنامج أسامة الحداد - جامعة إب",
+  "short_name": "جامعة إب",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f3f6fa",
+  "theme_color": "#102b50",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": []
+}
